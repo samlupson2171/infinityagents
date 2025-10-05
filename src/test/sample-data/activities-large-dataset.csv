@@ -1,0 +1,31 @@
+Activity,Category,Location,PricePerPerson,MinPersons,MaxPersons,AvailableFrom,AvailableTo,Duration,Description
+Flamenco Show Premium,show,Benidorm,65.00,2,40,2024-01-01,2024-12-31,2.5 hours,Premium flamenco experience with professional dancers and live musicians in elegant venue
+Beach Volleyball Tournament,adventure,Benidorm,20.00,8,16,2024-06-01,2024-09-30,3 hours,Competitive beach volleyball tournament with prizes and refreshments included
+Paella Cooking Workshop,dining,Benidorm,55.00,6,20,2024-01-01,2024-12-31,4 hours,Learn to cook authentic Valencian paella with local chef using traditional techniques and ingredients
+Scuba Diving Beginner Course,adventure,Benidorm,75.00,1,6,2024-04-01,2024-10-31,Half day,Introduction to scuba diving with certified instructor including equipment and shallow water practice
+Benidorm Nightlife Tour,nightlife,Benidorm,35.00,4,25,2024-01-01,2024-12-31,4 hours,Guided tour of Benidorm's best bars and clubs with welcome drinks and VIP entry included
+Shopping Tour Outlet Centers,shopping,Benidorm,25.00,6,40,2024-01-01,2024-12-31,5 hours,Visit major outlet centers and shopping districts with personal shopping assistant and transport
+Helicopter Coastal Flight,adventure,Benidorm,150.00,1,3,2024-01-01,2024-12-31,30 minutes,Spectacular helicopter flight over Costa Blanca coastline with aerial photography opportunities
+Wine Cellar Tour Valencia,dining,Benidorm,45.00,8,30,2024-01-01,2024-12-31,5 hours,Visit traditional wine cellars in Valencia region with tastings and gourmet lunch included
+Parasailing Adventure,adventure,Benidorm,60.00,1,2,2024-05-01,2024-10-31,1 hour,Thrilling parasailing experience with panoramic views of coastline and professional safety equipment
+Aqua Park Water Slides,adventure,Benidorm,32.00,1,8,2024-05-01,2024-09-30,Full day,Water park with multiple slides pools and attractions suitable for all ages and swimming abilities
+Segway City Tour,cultural,Benidorm,40.00,4,12,2024-01-01,2024-12-31,2 hours,Explore Benidorm on Segway with guided commentary covering history culture and main attractions
+Fishing Charter Deep Sea,excursion,Benidorm,80.00,4,12,2024-01-01,2024-12-31,6 hours,Deep sea fishing charter with experienced crew equipment bait and fish cleaning service included
+Yoga Sunrise Session,cultural,Benidorm,25.00,6,20,2024-01-01,2024-12-31,1.5 hours,Peaceful sunrise yoga session on the beach with qualified instructor and meditation component
+Go-Kart Racing Circuit,adventure,Benidorm,35.00,2,8,2024-01-01,2024-12-31,1 hour,Professional go-kart racing on outdoor circuit with safety briefing and timing system
+Salsa Dancing Lessons,cultural,Benidorm,30.00,4,20,2024-01-01,2024-12-31,2 hours,Learn salsa dancing with professional instructors in authentic Spanish dance studio setting
+Boat Party Catamaran,nightlife,Benidorm,55.00,10,80,2024-06-01,2024-09-30,4 hours,Party catamaran with DJ music open bar swimming stops and sunset views along the coast
+Paintball Adventure Park,adventure,Benidorm,40.00,8,24,2024-01-01,2024-12-31,3 hours,Paintball games in themed scenarios with equipment rental and safety gear provided
+Spa Wellness Package,cultural,Benidorm,85.00,1,4,2024-01-01,2024-12-31,3 hours,Luxury spa treatment including massage facial and access to thermal facilities and relaxation areas
+Motorcycle Tour Mountains,excursion,Benidorm,95.00,2,8,2024-03-01,2024-11-30,6 hours,Guided motorcycle tour through scenic mountain routes with bike rental and safety equipment
+Stand-up Paddleboard,adventure,Benidorm,35.00,2,10,2024-04-01,2024-10-31,2 hours,Stand-up paddleboard lesson and rental with instructor guidance in calm bay waters
+Albufeira Jeep Safari,adventure,Albufeira,65.00,4,8,2024-01-01,2024-12-31,6 hours,Off-road jeep safari through Algarve countryside visiting traditional villages and scenic viewpoints
+Surf Lessons Beginners,adventure,Albufeira,45.00,2,8,2024-04-01,2024-10-31,3 hours,Beginner surf lessons with certified instructor including board rental and wetsuit
+Portuguese Language Class,cultural,Albufeira,35.00,6,15,2024-01-01,2024-12-31,2 hours,Basic Portuguese language lesson with native speaker covering essential phrases and cultural context
+Horseback Riding Beach,excursion,Albufeira,55.00,2,8,2024-01-01,2024-12-31,2 hours,Horseback riding along pristine beaches with experienced guide suitable for all skill levels
+Ceramic Pottery Workshop,cultural,Albufeira,40.00,4,12,2024-01-01,2024-12-31,3 hours,Traditional Portuguese pottery workshop creating your own ceramic pieces with local artisan
+Cliff Jumping Adventure,adventure,Albufeira,50.00,2,6,2024-05-01,2024-09-30,3 hours,Supervised cliff jumping at safe locations with professional guides and safety equipment provided
+Albufeira Ghost Tour,cultural,Albufeira,25.00,8,20,2024-01-01,2024-12-31,2 hours,Evening ghost tour exploring haunted locations and local legends with theatrical storytelling
+Quad Bike Desert Tour,adventure,Albufeira,70.00,2,6,2024-01-01,2024-12-31,4 hours,Quad bike adventure through desert landscapes and coastal paths with safety briefing and equipment
+Traditional Market Tour,cultural,Albufeira,20.00,10,30,2024-01-01,2024-12-31,2.5 hours,Guided tour of traditional markets with local produce tasting and cultural insights
+Albufeira Pub Crawl,nightlife,Albufeira,30.00,6,40,2024-01-01,2024-12-31,4 hours,Organized pub crawl visiting best local bars with drink specials and group activities

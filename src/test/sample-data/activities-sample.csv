@@ -1,0 +1,21 @@
+Activity,Category,Location,PricePerPerson,MinPersons,MaxPersons,AvailableFrom,AvailableTo,Duration,Description
+Flamenco Show at Tablao Villa Rosa,show,Benidorm,45.00,2,50,2024-01-01,2024-12-31,2 hours,Experience authentic Spanish flamenco with passionate dancers and live guitar music in an intimate setting
+Benidorm Palace Dinner Show,show,Benidorm,65.00,2,100,2024-01-01,2024-12-31,3 hours,Spectacular variety show with international artists featuring acrobatics dance and comedy plus 3-course dinner
+Terra Mitica Theme Park,adventure,Benidorm,35.00,1,8,2024-03-01,2024-11-30,Full day,Ancient civilizations themed park with thrilling rides and shows covering Egypt Greece Rome and Iberia
+Mundomar Marine Park,adventure,Benidorm,28.00,1,10,2024-01-01,2024-12-31,Half day,Marine life park featuring dolphins sea lions flamingos and exotic birds with educational shows
+Benidorm Old Town Walking Tour,cultural,Benidorm,15.00,4,25,2024-01-01,2024-12-31,2.5 hours,Discover the historic heart of Benidorm with its charming narrow streets traditional architecture and local markets
+Algar Waterfalls Excursion,excursion,Benidorm,32.00,6,40,2024-04-01,2024-10-31,4 hours,Visit the stunning natural pools and waterfalls of Algar with crystal clear mountain water perfect for swimming
+Guadalest Village Tour,cultural,Benidorm,25.00,8,50,2024-01-01,2024-12-31,3 hours,Explore the picturesque mountain village of Guadalest with its castle museum and breathtaking valley views
+Catamaran Sunset Cruise,excursion,Benidorm,38.00,2,60,2024-05-01,2024-09-30,2.5 hours,Relaxing sunset cruise along the Costa Blanca with drinks swimming stops and stunning coastal views
+Tapas and Wine Tasting Tour,dining,Benidorm,42.00,4,16,2024-01-01,2024-12-31,3 hours,Authentic Spanish culinary experience visiting traditional tapas bars with local wine and food pairings
+Jet Ski Safari Adventure,adventure,Benidorm,85.00,1,2,2024-05-01,2024-10-31,1.5 hours,Thrilling jet ski adventure along the coastline with professional guide and safety equipment included
+Albufeira Dolphin Watching,excursion,Albufeira,35.00,2,30,2024-04-01,2024-10-31,2.5 hours,Boat trip to observe dolphins in their natural habitat along the beautiful Algarve coastline
+Sagres Lighthouse and Cliffs,cultural,Albufeira,28.00,6,45,2024-01-01,2024-12-31,4 hours,Visit the dramatic cliffs and historic lighthouse at the southwestern tip of Europe with stunning ocean views
+Albufeira Beach Buggy Adventure,adventure,Albufeira,55.00,2,4,2024-03-01,2024-11-30,3 hours,Off-road adventure through Algarve countryside beaches and traditional villages in open-top buggies
+Lagos Boat Cave Tour,excursion,Albufeira,30.00,4,25,2024-01-01,2024-12-31,2 hours,Explore the famous Ponta da Piedade caves and grottos with their golden cliffs and emerald waters
+Fado Night in Lisbon,show,Albufeira,50.00,2,40,2024-01-01,2024-12-31,3 hours,Traditional Portuguese Fado music performance in authentic Lisbon venue with dinner and local wine
+Silves Castle and Market,cultural,Albufeira,22.00,8,35,2024-01-01,2024-12-31,3.5 hours,Visit the medieval Moorish castle and explore the traditional market with local crafts and regional products
+Ria Formosa Nature Park,excursion,Albufeira,26.00,6,30,2024-01-01,2024-12-31,4 hours,Boat tour through protected wetlands observing flamingos and other wildlife in this UNESCO biosphere reserve
+Albufeira Cooking Class,dining,Albufeira,48.00,4,12,2024-01-01,2024-12-31,4 hours,Learn to prepare traditional Portuguese dishes including cataplana and pastéis de nata with local chef
+Benagil Cave Kayak Tour,adventure,Albufeira,40.00,2,8,2024-04-01,2024-10-31,3 hours,Paddle to the world-famous Benagil Cave and explore hidden beaches along the dramatic Algarve coastline
+Portimão Sardine Festival,cultural,Albufeira,18.00,10,100,2024-08-01,2024-08-15,2 hours,Celebrate Portuguese culture at the famous sardine festival with live music traditional food and local crafts

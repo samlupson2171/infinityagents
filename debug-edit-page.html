@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Edit Page</title>
+    <script>
+        async function testEditPage() {
+            try {
+                console.log('Testing edit page API...');
+                
+                // Test the destination fetch
+                const response = await fetch('/api/admin/destinations/68d697c22be6165fbe3d14f0');
+                console.log('API Response status:', response.status);
+                
+                if (response.status === 401) {
+                    console.log('❌ Not authenticated - need to login first');
+                    document.getElementById('result').innerHTML = `
+                        <div style="color: red;">
+                            <h3>Authentication Required</h3>
+                            <p>You need to login as an admin user first.</p>
+                            <p><a href="/auth/login">Click here to login</a></p>
+                            <p>Use: admin@infinityweekends.co.uk / admin123</p>
+                        </div>
+                    `;
+                } else if (response.ok) {
+                    const data = await response.json();
+                    console.log('✅ API working, destination data:', data);
+                    document.getElementById('result').innerHTML = `
+                        <div style="color: green;">
+                            <h3>API Working!</h3>
+                            <p>Destination: ${data.destination.name}</p>
+                            <p>The edit form should be working.</p>
+                        </div>
+                    `;
+                } else {
+                    console.log('❌ API error:', response.status);
+                    document.getElementById('result').innerHTML = `
+                        <div style="color: red;">
+                            <h3>API Error</h3>
+                            <p>Status: ${response.status}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('result').innerHTML = `
+                    <div style="color: red;">
+                        <h3>Network Error</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        window.onload = testEditPage;
+    </script>
+</head>
+<body>
+    <h1>Debug Edit Page</h1>
+    <div id="result">Testing...</div>
+</body>
+</html>

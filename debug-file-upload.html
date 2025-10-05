@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Upload Debug</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .debug-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .log { background: #f5f5f5; padding: 10px; margin: 10px 0; font-family: monospace; }
+        button { padding: 10px 15px; margin: 5px; }
+        input[type="file"] { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>File Upload Debug Tool</h1>
+    
+    <div class="debug-section">
+        <h3>Test File Upload API</h3>
+        <input type="file" id="fileInput" multiple>
+        <button onclick="testUpload()">Upload Files</button>
+        <div id="uploadLog" class="log"></div>
+    </div>
+
+    <div class="debug-section">
+        <h3>Test Training Material Creation</h3>
+        <input type="text" id="titleInput" placeholder="Material Title" value="Test Material">
+        <textarea id="descInput" placeholder="Description">Test description</textarea>
+        <button onclick="testCreateMaterial()">Create Material</button>
+        <div id="createLog" class="log"></div>
+    </div>
+
+    <script>
+        let uploadedFiles = [];
+
+        function log(elementId, message) {
+            const element = document.getElementById(elementId);
+            const timestamp = new Date().toLocaleTimeString();
+            element.innerHTML += `[${timestamp}] ${message}\n`;
+            console.log(message);
+        }
+
+        async function testUpload() {
+            const fileInput = document.getElementById('fileInput');
+            const files = fileInput.files;
+            
+            if (files.length === 0) {
+                log('uploadLog', 'No files selected');
+                return;
+            }
+
+            log('uploadLog', `Starting upload of ${files.length} files`);
+            uploadedFiles = [];
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                log('uploadLog', `Uploading: ${file.name} (${file.size} bytes)`);
+
+                try {
+                    const formData = new FormData();
+                    formData.append('file', file);
+
+                    const response = await fetch('/api/admin/training/files/upload', {
+                        method: 'POST',
+                        body: formData,
+                    });
+
+                    const result = await response.json();
+                    
+                    if (response.ok && result.success) {
+                        log('uploadLog', `✓ Uploaded: ${file.name} -> ID: ${result.file.id}`);
+                        uploadedFiles.push(result.file);
+                    } else {
+                        log('uploadLog', `✗ Failed: ${file.name} -> ${result.error || 'Unknown error'}`);
+                    }
+                } catch (error) {
+                    log('uploadLog', `✗ Error uploading ${file.name}: ${error.message}`);
+                }
+            }
+
+            log('uploadLog', `Upload complete. ${uploadedFiles.length} files uploaded successfully.`);
+            log('uploadLog', `Uploaded files: ${JSON.stringify(uploadedFiles, null, 2)}`);
+        }
+
+        async function testCreateMaterial() {
+            const title = document.getElementById('titleInput').value;
+            const description = document.getElementById('descInput').value;
+
+            if (uploadedFiles.length === 0) {
+                log('createLog', 'No uploaded files available. Upload files first.');
+                return;
+            }
+
+            const materialData = {
+                title: title,
+                description: description,
+                type: 'download',
+                isActive: true,
+                uploadedFiles: uploadedFiles.map(file => ({
+                    id: file.id,
+                    originalName: file.originalName,
+                    fileName: file.fileName,
+                    mimeType: file.mimeType,
+                    size: file.size,
+                    uploadedAt: new Date(file.uploadedAt),
+                }))
+            };
+
+            log('createLog', `Creating material with data: ${JSON.stringify(materialData, null, 2)}`);
+
+            try {
+                const response = await fetch('/api/admin/training', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(materialData),
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    log('createLog', `✓ Material created successfully: ${JSON.stringify(result, null, 2)}`);
+                } else {
+                    log('createLog', `✗ Failed to create material: ${result.error || 'Unknown error'}`);
+                    log('createLog', `Response status: ${response.status}`);
+                    log('createLog', `Full response: ${JSON.stringify(result, null, 2)}`);
+                }
+            } catch (error) {
+                log('createLog', `✗ Error creating material: ${error.message}`);
+            }
+        }
+    </script>
+</body>
+</html>

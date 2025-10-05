@@ -1,0 +1,10 @@
+Activity,Category,Location,PricePerPerson,MinPersons,MaxPersons,AvailableFrom,AvailableTo,Duration,Description
+,show,Benidorm,45.00,2,50,2024-01-01,2024-12-31,2 hours,Missing activity name
+Invalid Show,invalid_category,Benidorm,45.00,2,50,2024-01-01,2024-12-31,2 hours,Invalid category type
+Negative Price Activity,show,Benidorm,-25.00,2,50,2024-01-01,2024-12-31,2 hours,Activity with negative price
+Invalid Capacity,show,Benidorm,45.00,10,5,2024-01-01,2024-12-31,2 hours,Max persons less than min persons
+Invalid Dates,show,Benidorm,45.00,2,50,2024-12-31,2024-01-01,2 hours,End date before start date
+Missing Description,show,Benidorm,45.00,2,50,2024-01-01,2024-12-31,2 hours,
+Short Description,show,Benidorm,45.00,2,50,2024-01-01,2024-12-31,2 hours,Too short
+Invalid Date Format,show,Benidorm,45.00,2,50,invalid-date,2024-12-31,2 hours,Activity with invalid date format
+Missing Location,show,,45.00,2,50,2024-01-01,2024-12-31,2 hours,Activity without location specified
