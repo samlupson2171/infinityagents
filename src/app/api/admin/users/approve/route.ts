@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/auth-middleware';
 import { connectDB } from '@/lib/mongodb';
 import User from '@/models/User';
-import { sendApprovalNotificationEmail } from '@/lib/email';
+import { sendApprovalNotificationEmail } from '@/lib/resend-email';
 import { z } from 'zod';
 
 const approveUserSchema = z.object({

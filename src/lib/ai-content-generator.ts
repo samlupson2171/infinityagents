@@ -59,7 +59,7 @@ class OpenAIProvider implements AIProvider {
     const startTime = Date.now();
 
     try {
-      const responses: { [key: string]: any } = {};
+      const responses: { [key: string]: { title: string; content: string; highlights: string[]; tips: string[] } } = {};
 
       console.log('🔥 AI Generator processing sections:', request.sections);
       
@@ -141,13 +141,15 @@ class OpenAIProvider implements AIProvider {
         - What makes this destination special
         - Brief mention of main attractions and experiences
         
-        Format the response as JSON with:
+        IMPORTANT: Respond ONLY with valid JSON in this exact format:
         {
           "title": "Overview",
           "content": "HTML formatted content (use <p>, <strong>, <em> tags)",
           "highlights": ["highlight 1", "highlight 2", "highlight 3"],
           "tips": ["tip 1", "tip 2"]
-        }`,
+        }
+        
+        Do not include any text before or after the JSON object.`,
 
       accommodation: `${baseContext} ${audienceContext} ${toneContext} ${lengthContext}
         
@@ -157,7 +159,15 @@ class OpenAIProvider implements AIProvider {
         - Price ranges and booking considerations
         - Recommendations for different budgets and preferences
         
-        Format the response as JSON with the same structure as above.`,
+        IMPORTANT: Respond ONLY with valid JSON in this exact format:
+        {
+          "title": "Where to Stay",
+          "content": "HTML formatted content (use <p>, <strong>, <em> tags)",
+          "highlights": ["highlight 1", "highlight 2", "highlight 3"],
+          "tips": ["tip 1", "tip 2"]
+        }
+        
+        Do not include any text before or after the JSON object.`,
 
       attractions: `${baseContext} ${audienceContext} ${toneContext} ${lengthContext}
         
@@ -168,7 +178,15 @@ class OpenAIProvider implements AIProvider {
         - Activities and experiences available
         - Opening hours and ticket information where relevant
         
-        Format the response as JSON with the same structure as above.`,
+        IMPORTANT: Respond ONLY with valid JSON in this exact format:
+        {
+          "title": "Top Attractions",
+          "content": "HTML formatted content (use <p>, <strong>, <em> tags)",
+          "highlights": ["highlight 1", "highlight 2", "highlight 3"],
+          "tips": ["tip 1", "tip 2"]
+        }
+        
+        Do not include any text before or after the JSON object.`,
 
       beaches: `${baseContext} ${audienceContext} ${toneContext} ${lengthContext}
         
@@ -179,7 +197,15 @@ class OpenAIProvider implements AIProvider {
         - Beach safety and conditions
         - Recommendations for different preferences (family-friendly, party beaches, quiet spots)
         
-        Format the response as JSON with the same structure as above.`,
+        IMPORTANT: Respond ONLY with valid JSON in this exact format:
+        {
+          "title": "Beaches",
+          "content": "HTML formatted content (use <p>, <strong>, <em> tags)",
+          "highlights": ["highlight 1", "highlight 2", "highlight 3"],
+          "tips": ["tip 1", "tip 2"]
+        }
+        
+        Do not include any text before or after the JSON object.`,
 
       nightlife: `${baseContext} ${audienceContext} ${toneContext} ${lengthContext}
         
@@ -190,7 +216,15 @@ class OpenAIProvider implements AIProvider {
         - Dress codes and entry requirements
         - Safety tips for nightlife
         
-        Format the response as JSON with the same structure as above.`,
+        IMPORTANT: Respond ONLY with valid JSON in this exact format:
+        {
+          "title": "Nightlife",
+          "content": "HTML formatted content (use <p>, <strong>, <em> tags)",
+          "highlights": ["highlight 1", "highlight 2", "highlight 3"],
+          "tips": ["tip 1", "tip 2"]
+        }
+        
+        Do not include any text before or after the JSON object.`,
 
       dining: `${baseContext} ${audienceContext} ${toneContext} ${lengthContext}
         
@@ -201,7 +235,15 @@ class OpenAIProvider implements AIProvider {
         - Dietary restrictions and vegetarian/vegan options
         - Dining customs and tipping etiquette
         
-        Format the response as JSON with the same structure as above.`,
+        IMPORTANT: Respond ONLY with valid JSON in this exact format:
+        {
+          "title": "Dining",
+          "content": "HTML formatted content (use <p>, <strong>, <em> tags)",
+          "highlights": ["highlight 1", "highlight 2", "highlight 3"],
+          "tips": ["tip 1", "tip 2"]
+        }
+        
+        Do not include any text before or after the JSON object.`,
 
       practical: `${baseContext} ${audienceContext} ${toneContext} ${lengthContext}
         
@@ -213,7 +255,15 @@ class OpenAIProvider implements AIProvider {
         - Health and safety considerations
         - Local customs and etiquette
         
-        Format the response as JSON with the same structure as above.`,
+        IMPORTANT: Respond ONLY with valid JSON in this exact format:
+        {
+          "title": "Practical Information",
+          "content": "HTML formatted content (use <p>, <strong>, <em> tags)",
+          "highlights": ["highlight 1", "highlight 2", "highlight 3"],
+          "tips": ["tip 1", "tip 2"]
+        }
+        
+        Do not include any text before or after the JSON object.`,
     };
 
     const selectedPrompt = sectionPrompts[section as keyof typeof sectionPrompts];
@@ -228,46 +278,55 @@ class OpenAIProvider implements AIProvider {
   }
 
   private async callOpenAI(prompt: string): Promise<any> {
+    console.log('🚀 Calling OpenAI API with prompt length:', prompt.length);
+    
+    const requestBody = {
+      model: this.model,
+      messages: [
+        {
+          role: 'system',
+          content: 'You are a professional travel content writer. Always respond with valid JSON in the exact format requested. Do not include any text before or after the JSON object.',
+        },
+        {
+          role: 'user',
+          content: prompt,
+        },
+      ],
+      temperature: 0.7,
+      max_tokens: 1500,
+    };
+    
+    console.log('📤 OpenAI request body:', JSON.stringify(requestBody, null, 2));
+
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${this.apiKey}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        model: this.model,
-        messages: [
-          {
-            role: 'system',
-            content:
-              'You are a professional travel content writer. Always respond with valid JSON in the exact format requested.',
-          },
-          {
-            role: 'user',
-            content: prompt,
-          },
-        ],
-        temperature: 0.7,
-        max_tokens: 1500,
-      }),
+      body: JSON.stringify(requestBody),
     });
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('OpenAI API error response:', errorText);
+      console.error('❌ OpenAI API error response:', errorText);
       throw new Error(
         `OpenAI API error: ${response.status} ${response.statusText} - ${errorText}`
       );
     }
 
     const data = await response.json();
-    console.log('OpenAI API response data:', data);
+    console.log('📥 OpenAI API response data:', JSON.stringify(data, null, 2));
     
     if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+      console.error('❌ Invalid response structure from OpenAI API:', data);
       throw new Error('Invalid response structure from OpenAI API');
     }
     
-    return data.choices[0].message.content;
+    const content = data.choices[0].message.content;
+    console.log('📝 Extracted content from OpenAI:', content);
+    
+    return content;
   }
 
   private parseResponse(response: string, section: string): any {
@@ -281,9 +340,14 @@ class OpenAIProvider implements AIProvider {
       };
     }
 
+    console.log(`🔍 Parsing response for section ${section}:`, response.substring(0, 500) + '...');
+
     try {
       // Clean the response - sometimes AI adds extra text before/after JSON
       let cleanResponse = response.trim();
+      
+      // Remove any markdown code block markers
+      cleanResponse = cleanResponse.replace(/```json\s*/g, '').replace(/```\s*/g, '');
       
       // Try to extract JSON from the response if it's wrapped in other text
       const jsonMatch = cleanResponse.match(/\{[\s\S]*\}/);
@@ -291,7 +355,10 @@ class OpenAIProvider implements AIProvider {
         cleanResponse = jsonMatch[0];
       }
 
+      console.log(`🧹 Cleaned response for ${section}:`, cleanResponse.substring(0, 300) + '...');
+
       const parsed = JSON.parse(cleanResponse);
+      console.log(`✅ Successfully parsed JSON for ${section}:`, parsed);
       
       // Ensure we have the required fields
       const result = {
@@ -319,33 +386,48 @@ class OpenAIProvider implements AIProvider {
         result.tips = parsed.advice;
       }
 
+      console.log(`🎯 Final result for ${section}:`, result);
       return result;
     } catch (error) {
-      console.warn(`Failed to parse AI response for section ${section}:`, error);
-      console.warn('Raw response:', response);
+      console.error(`❌ Failed to parse AI response for section ${section}:`, error);
+      console.error('Raw response:', response);
       
-      // Fallback if JSON parsing fails - try to extract useful content
-      const lines = response.split('\n').filter(line => line.trim());
-      let content = 'Content generated but could not be parsed properly.';
+      // Enhanced fallback - try to extract meaningful content from the raw response
+      let fallbackContent = '';
+      let fallbackTitle = this.getDefaultTitle(section);
       
-      if (lines.length > 0) {
-        // Try to find content that looks like actual text
-        const contentLines = lines.filter(line => 
-          !line.startsWith('{') && 
-          !line.startsWith('}') && 
-          !line.includes('"title"') &&
-          !line.includes('"content"') &&
-          line.length > 10
-        );
+      // If the response looks like it might contain useful text, try to extract it
+      if (response.length > 50) {
+        // Remove common JSON artifacts and clean up the text
+        let cleanText = response
+          .replace(/[{}"\[\]]/g, ' ')  // Remove JSON characters
+          .replace(/title:|content:|highlights:|tips:/gi, ' ')  // Remove field names
+          .replace(/\s+/g, ' ')  // Normalize whitespace
+          .trim();
         
-        if (contentLines.length > 0) {
-          content = contentLines.join('\n\n');
+        // If we have substantial text, use it
+        if (cleanText.length > 20) {
+          // Try to extract the first meaningful sentence or paragraph
+          const sentences = cleanText.split(/[.!?]+/).filter(s => s.trim().length > 10);
+          if (sentences.length > 0) {
+            fallbackContent = sentences.slice(0, 3).join('. ').trim();
+            if (!fallbackContent.endsWith('.')) {
+              fallbackContent += '.';
+            }
+          } else {
+            fallbackContent = cleanText.substring(0, 200) + (cleanText.length > 200 ? '...' : '');
+          }
         }
       }
       
+      // If we still don't have good content, provide a helpful message
+      if (!fallbackContent || fallbackContent.length < 20) {
+        fallbackContent = `Content generation for ${section} encountered an issue. The AI service returned data that couldn't be processed properly. Please try generating this section again or add content manually.`;
+      }
+      
       return {
-        title: this.getDefaultTitle(section),
-        content: content,
+        title: fallbackTitle,
+        content: fallbackContent,
         highlights: [],
         tips: []
       };
@@ -365,10 +447,10 @@ class OpenAIProvider implements AIProvider {
     return titles[section as keyof typeof titles] || 'Information';
   }
 
-  private calculateTokens(responses: { [key: string]: any }): number {
+  private calculateTokens(responses: { [key: string]: { title: string; content: string; highlights: string[]; tips: string[] } }): number {
     // Simple token estimation - in production, use proper token counting
     const totalContent = Object.values(responses)
-      .map((r: any) => r.content + r.highlights.join(' ') + r.tips.join(' '))
+      .map((r) => r.content + r.highlights.join(' ') + r.tips.join(' '))
       .join(' ');
     return Math.ceil(totalContent.length / 4); // Rough estimation
   }
@@ -394,7 +476,7 @@ class ClaudeProvider implements AIProvider {
 // Main AI Content Generator Service
 export class AIContentGeneratorService {
   private providers: Map<string, AIProvider> = new Map();
-  private defaultProvider: string;
+  private defaultProvider: string = '';
 
   constructor() {
     // Initialize providers based on available API keys
@@ -424,7 +506,11 @@ export class AIContentGeneratorService {
     request: AIGenerationRequest,
     providerName?: string
   ): Promise<AIGenerationResponse> {
-    const provider = this.providers.get(providerName || this.defaultProvider);
+    const selectedProvider = providerName || this.defaultProvider;
+    if (!selectedProvider) {
+      throw new Error('No AI provider available');
+    }
+    const provider = this.providers.get(selectedProvider);
 
     if (!provider) {
       throw new Error(

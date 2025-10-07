@@ -143,7 +143,27 @@ export default function SettingsManager() {
             <div>
               <div className="mb-6">
                 <h4 className="text-xl font-semibold text-gray-900 mb-2">Email Configuration</h4>
-                <p className="text-gray-600">Configure SMTP settings for sending emails from the platform.</p>
+                <p className="text-gray-600">Configure email settings for sending emails from the platform using Resend.</p>
+                
+                <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                  <h5 className="text-sm font-medium text-blue-900 mb-2">📧 Using Resend Email Service</h5>
+                  <p className="text-sm text-blue-800 mb-2">
+                    This platform now uses Resend for reliable email delivery. You'll need:
+                  </p>
+                  <ul className="text-sm text-blue-800 list-disc list-inside space-y-1">
+                    <li>A Resend account (free tier available)</li>
+                    <li>Your Resend API key set in environment variables</li>
+                    <li>A verified sending domain or email address</li>
+                  </ul>
+                  <a 
+                    href="https://resend.com" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-block mt-2 text-sm text-blue-600 hover:text-blue-800 underline"
+                  >
+                    Get started with Resend →
+                  </a>
+                </div>
               </div>
 
               {error && (
@@ -177,49 +197,6 @@ export default function SettingsManager() {
               )}
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">SMTP Host</label>
-                  <input
-                    type="text"
-                    value={emailSettings.smtpHost}
-                    onChange={(e) => setEmailSettings({ ...emailSettings, smtpHost: e.target.value })}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                    placeholder="smtp.gmail.com"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">SMTP Port</label>
-                  <input
-                    type="number"
-                    value={emailSettings.smtpPort}
-                    onChange={(e) => setEmailSettings({ ...emailSettings, smtpPort: parseInt(e.target.value) || 587 })}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                    placeholder="587"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">SMTP Username</label>
-                  <input
-                    type="text"
-                    value={emailSettings.smtpUser}
-                    onChange={(e) => setEmailSettings({ ...emailSettings, smtpUser: e.target.value })}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                    placeholder="your-email@gmail.com"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">SMTP Password</label>
-                  <input
-                    type="password"
-                    value={emailSettings.smtpPassword}
-                    onChange={(e) => setEmailSettings({ ...emailSettings, smtpPassword: e.target.value })}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                    placeholder="••••••••"
-                  />
-                </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">From Email</label>
@@ -244,32 +221,15 @@ export default function SettingsManager() {
                 </div>
               </div>
 
-              <div className="mt-6">
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={emailSettings.enableTLS}
-                    onChange={(e) => setEmailSettings({ ...emailSettings, enableTLS: e.target.checked })}
-                    className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded"
-                  />
-                  <label className="ml-2 block text-sm text-gray-900">Enable TLS/SSL</label>
-                </div>
-              </div>
+
 
               <div className="mt-8 flex space-x-4">
                 <button
-                  onClick={saveEmailSettings}
-                  disabled={loading}
-                  className="bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white px-6 py-2 rounded-md font-medium transition-colors"
-                >
-                  {loading ? 'Saving...' : 'Save Settings'}
-                </button>
-                <button
                   onClick={testEmailSettings}
-                  disabled={testEmailLoading || !emailSettings.smtpHost}
+                  disabled={testEmailLoading || !emailSettings.fromEmail}
                   className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-6 py-2 rounded-md font-medium transition-colors"
                 >
-                  {testEmailLoading ? 'Testing...' : 'Test Email'}
+                  {testEmailLoading ? 'Testing...' : 'Test Email with Resend'}
                 </button>
               </div>
             </div>

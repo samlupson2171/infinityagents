@@ -354,8 +354,12 @@ export default function DestinationContentEditor({
 
   // Handle AI content generation
   const handleAIContentGenerated = useCallback((generatedContent: any) => {
+    console.log('🤖 AI Content Generated:', generatedContent);
+    
     // Apply generated content to sections
     Object.entries(generatedContent.sections || {}).forEach(([sectionKey, sectionData]: [string, any]) => {
+      console.log(`📝 Processing section ${sectionKey}:`, sectionData);
+      
       if (sections[sectionKey as keyof typeof sections]) {
         const updatedSection: DestinationSection = {
           ...sections[sectionKey as keyof typeof sections],
@@ -365,7 +369,11 @@ export default function DestinationContentEditor({
           lastModified: new Date(),
           aiGenerated: true
         };
+        
+        console.log(`💾 Saving section ${sectionKey}:`, updatedSection);
         onSectionUpdate(sectionKey, updatedSection);
+      } else {
+        console.warn(`⚠️ Section ${sectionKey} not found in existing sections`);
       }
     });
     

@@ -9,14 +9,23 @@ function createTransporter(): nodemailer.Transporter {
     throw new EmailDeliveryError('Email configuration is incomplete. Missing SMTP settings.');
   }
 
+  const port = parseInt(process.env.SMTP_PORT || '587');
+  const isMicrosoft365 = process.env.SMTP_HOST?.includes('office365.com') || process.env.SMTP_HOST?.includes('outlook.com');
+  
   return nodemailer.createTransport({
     host: process.env.SMTP_HOST,
-    port: parseInt(process.env.SMTP_PORT || '587'),
-    secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
+    port: port,
+    secure: port === 465, // true for 465, false for other ports
+    requireTLS: port === 587, // Force STARTTLS for port 587
     auth: {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS,
     },
+    // Microsoft 365 specific configuration
+    tls: isMicrosoft365 ? {
+      rejectUnauthorized: false,
+      ciphers: 'SSLv3'
+    } : undefined,
     // Enhanced configuration for better reliability
     pool: true,
     maxConnections: 5,

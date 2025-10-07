@@ -135,6 +135,8 @@ export default function EditDestinationPage() {
   const handleSectionUpdate = async (sectionKey: string, section: DestinationSection) => {
     if (!destination) return;
 
+    console.log(`🔄 Updating section ${sectionKey}:`, section);
+
     try {
       const updatedDestination = {
         ...destination,
@@ -143,6 +145,8 @@ export default function EditDestinationPage() {
           [sectionKey]: section
         }
       };
+
+      console.log('📤 Sending update request with sections:', updatedDestination.sections);
 
       const response = await fetch(`/api/admin/destinations/${destinationId}`, {
         method: 'PUT',
@@ -153,10 +157,15 @@ export default function EditDestinationPage() {
       });
 
       if (response.ok) {
+        const result = await response.json();
+        console.log('✅ Section update successful:', result);
         setDestination(updatedDestination);
+      } else {
+        const errorData = await response.json();
+        console.error('❌ Section update failed:', errorData);
       }
     } catch (error) {
-      console.error('Error updating section:', error);
+      console.error('❌ Error updating section:', error);
     }
   };
 

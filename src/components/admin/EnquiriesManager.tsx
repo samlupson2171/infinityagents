@@ -125,57 +125,19 @@ export default function EnquiriesManager({
     setShowCreateQuoteModal(true);
   };
 
-  const handleDebugQuote = async (enquiry: EnquiryWithId) => {
-    try {
-      const response = await fetch('/api/debug/test-quote', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          enquiryId: enquiry._id,
-          leadName: enquiry.leadName,
-          hotelName: enquiry.resort || 'Test Hotel',
-          numberOfPeople: enquiry.numberOfGuests,
-          numberOfRooms: Math.ceil(enquiry.numberOfGuests / 2),
-          numberOfNights: enquiry.numberOfNights,
-          arrivalDate: enquiry.travelDate,
-          whatsIncluded: 'Debug test package',
-          totalPrice: enquiry.budgetPerPerson * enquiry.numberOfGuests,
-        }),
-      });
 
-      const data = await response.json();
-      console.log('Debug response:', data);
-
-      if (!response.ok) {
-        console.error('Debug failed:', data);
-        alert(`Debug failed: ${data.error?.message || 'Unknown error'}`);
-      } else {
-        alert('Debug test successful! Check console for details.');
-      }
-    } catch (error) {
-      console.error('Debug error:', error);
-      alert(`Debug error: ${error}`);
-    }
-  };
 
   const handleQuoteCreated = async (quoteData: any) => {
     try {
-      // Temporarily use debug endpoint to see what's happening
-      console.log('Sending quote data:', quoteData);
-      const response = await fetch('/api/debug/test-quote', {
+      const response = await fetch(`/api/admin/enquiries/${selectedEnquiryForQuote?._id}/quotes`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...quoteData,
-          enquiryId: selectedEnquiryForQuote?._id,
-        }),
+        body: JSON.stringify(quoteData),
       });
 
       const data = await response.json();
-      console.log('Debug response:', data);
 
       if (!response.ok) {
-        console.error('Debug failed:', data);
         throw new Error(data.error?.message || 'Failed to create quote');
       }
 
@@ -542,13 +504,6 @@ export default function EnquiriesManager({
                               className="bg-purple-600 hover:bg-purple-700 text-white px-3 py-1 rounded text-sm mr-2"
                             >
                               Create Quote
-                            </button>
-
-                            <button
-                              onClick={() => handleDebugQuote(enquiry)}
-                              className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm"
-                            >
-                              Debug Test
                             </button>
 
                             {enquiry.status === 'new' && (
